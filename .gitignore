@@ -1,0 +1,7 @@
+# Entorno local de Python
+venv/
+
+# Archivos del sistema y de edición
+.DS_Store
+Thumbs.db
+.vscode/
