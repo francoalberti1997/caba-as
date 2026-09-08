@@ -10,8 +10,12 @@ menu?.querySelectorAll('a').forEach(link => link.addEventListener('click', () =>
 }));
 
 const themeButtons = document.querySelectorAll('.theme-button');
-const savedTheme = localStorage.getItem('urqu-yaku-theme') || 'tierra';
+const requestedTheme = new URLSearchParams(window.location.search).get('tema');
+const savedTheme = ['tierra', 'bosque', 'rio'].includes(requestedTheme)
+  ? requestedTheme
+  : localStorage.getItem('urqu-yaku-theme') || 'tierra';
 function setTheme(theme) {
+  document.body.classList.add('is-switching');
   document.body.dataset.theme = theme;
   localStorage.setItem('urqu-yaku-theme', theme);
   themeButtons.forEach(button => {
@@ -19,6 +23,7 @@ function setTheme(theme) {
     button.classList.toggle('active', selected);
     button.setAttribute('aria-pressed', String(selected));
   });
+  window.setTimeout(() => document.body.classList.remove('is-switching'), 460);
 }
 setTheme(savedTheme);
 themeButtons.forEach(button => button.addEventListener('click', () => setTheme(button.dataset.theme)));
